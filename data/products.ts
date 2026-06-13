@@ -32,7 +32,7 @@ export const products = [
     name: 'پین مو دست ساز',
     price: 79000,
     image: '/p2.jpg',
-    category: 'اکسسوری زنانه',
+    category: 'آرایشی بهداشتی',
   },
   {
     id: 'p6',
