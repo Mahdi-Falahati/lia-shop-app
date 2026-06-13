@@ -2,8 +2,8 @@ import Hero from "@/components/home/Hero"
 import PromoBanner from "@/components/home/PromoBanner"
 import FeaturedProducts from "@/components/home/FeaturedProducts"
 import Categories from "@/components/home/Categories"
-import NewArrivals from "@/components/home/NewArrivals"
-import Newsletter from "@/components/home/Newsletter"
+import BeautySection from "@/components/home/BeautySection"
+import SocialJoin from "@/components/home/SocialJoin"
 
 export default function Home() {
   return (
@@ -11,9 +11,11 @@ export default function Home() {
       <Hero />
       <PromoBanner />
       <FeaturedProducts />
-      <Categories />
-      <NewArrivals />
-      <Newsletter />
+      <div id="categories">
+        <Categories />
+      </div>
+      <BeautySection />
+      <SocialJoin />
     </main>
   )
 }
