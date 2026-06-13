@@ -1,9 +1,9 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, Star, Shield, Truck } from "lucide-react"
+import { ArrowLeft, Star, Shield, Truck, Gem } from "lucide-react"
 
 const TYPING_LINES = [
   "اکسسوری‌های لوکس برای شما",
@@ -17,6 +17,12 @@ const badges = [
   { icon: Shield, label: "پرداخت امن" },
 ]
 
+const floatingCards = [
+  { top: "16%", right: "5%", label: "ضمانت اصالت کالا", sub: "تضمین کیفیت", delay: 0.9, floatDur: 5 },
+  { top: "52%", right: "2%", label: "کیفیت تضمینی", sub: "تحویل درب منزل", delay: 1.1, floatDur: 6.5 },
+  { top: "74%", left: "2%", label: "پشتیبانی لحظه‌ای", sub: "۷ روز هفته", delay: 1.3, floatDur: 4.5 },
+]
+
 function TypingText() {
   const [lineIndex, setLineIndex] = useState(0)
   const [charIndex, setCharIndex] = useState(0)
@@ -26,24 +32,22 @@ function TypingText() {
   useEffect(() => {
     const current = TYPING_LINES[lineIndex]
     let timeout: ReturnType<typeof setTimeout>
-
     if (!deleting && charIndex <= current.length) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, charIndex))
         setCharIndex((c) => c + 1)
-      }, charIndex === 0 ? 500 : 55)
+      }, charIndex === 0 ? 500 : 52)
     } else if (!deleting && charIndex > current.length) {
-      timeout = setTimeout(() => setDeleting(true), 2000)
+      timeout = setTimeout(() => setDeleting(true), 2200)
     } else if (deleting && charIndex >= 0) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, charIndex))
         setCharIndex((c) => c - 1)
-      }, 28)
+      }, 26)
     } else {
       setDeleting(false)
       setLineIndex((l) => (l + 1) % TYPING_LINES.length)
     }
-
     return () => clearTimeout(timeout)
   }, [charIndex, deleting, lineIndex])
 
@@ -57,37 +61,29 @@ function TypingText() {
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end start"] })
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  })
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"])
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"])
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"])
-  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "28%"])
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
 
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springX = useSpring(mouseX, { stiffness: 50, damping: 20 })
-  const springY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 18 })
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 18 })
 
-  const cardRotateY = useTransform(springX, (v) => v * 8)
-  const cardRotateX = useTransform(springY, (v) => v * -6)
-  const blob1X = useTransform(springX, (v) => v * -18)
-  const blob1Y = useTransform(springY, (v) => v * -18)
-  const floatCardX = useTransform(springX, (v) => v * -12)
-  const pillX = useTransform(springX, (v) => v * 10)
-  const pillY = useTransform(springY, (v) => v * -10)
+  const orb1X = useTransform(springX, (v) => v * -22)
+  const orb1Y = useTransform(springY, (v) => v * -22)
+  const orb2X = useTransform(springX, (v) => v * 14)
+  const orb2Y = useTransform(springY, (v) => v * 14)
+  const cardTiltY = useTransform(springX, (v) => v * 6)
+  const cardTiltX = useTransform(springY, (v) => v * -4)
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect()
     if (!rect) return
-    const cx = rect.width / 2
-    const cy = rect.height / 2
-    mouseX.set(((e.clientX - rect.left) - cx) / cx)
-    mouseY.set(((e.clientY - rect.top) - cy) / cy)
+    mouseX.set(((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2))
+    mouseY.set(((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2))
   }
 
   return (
@@ -95,99 +91,131 @@ export default function Hero() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex items-center overflow-hidden"
+      style={{ background: "linear-gradient(145deg, #001a0f 0%, #00341e 28%, #004d2c 52%, #00764F 80%, #1a9468 100%)" }}
     >
-      <motion.div style={{ y: bgY }} className="absolute inset-0 -z-10">
-        <img
-          src="/favicon2.jpg"
-          alt=""
-          aria-hidden
-          className="w-full h-full object-cover scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-bl from-black/70 via-black/45 to-[#00764F]/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-      </motion.div>
-
       <motion.div
-        style={{ x: blob1X, y: blob1Y }}
-        className="absolute top-[10%] left-[8%] w-72 h-72 rounded-full opacity-25 blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.15, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        style={{ scale: bgScale }}
+        className="absolute inset-0 pointer-events-none"
       >
-        <div className="w-full h-full rounded-full" style={{ background: "radial-gradient(circle, #8CC1B0 0%, #00764F 60%, transparent 100%)" }} />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_60%_40%,rgba(140,193,176,0.18)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_80%_at_100%_100%,rgba(217,234,229,0.12)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_50%_at_0%_0%,rgba(0,118,79,0.3)_0%,transparent_60%)]" />
       </motion.div>
 
-      <motion.div
-        className="absolute bottom-[15%] right-[5%] w-96 h-96 rounded-full opacity-20 blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-      >
-        <div className="w-full h-full rounded-full" style={{ background: "radial-gradient(circle, #D9EAE5 0%, #8CC1B0 50%, transparent 100%)" }} />
-      </motion.div>
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(140,193,176,0.5) 40px, rgba(140,193,176,0.5) 41px),
+            repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(140,193,176,0.5) 40px, rgba(140,193,176,0.5) 41px)`,
+        }}
+      />
 
       <motion.div
-        className="absolute top-[18%] left-[15%] w-56 h-56 rounded-3xl border border-white/10 opacity-25 pointer-events-none"
+        className="absolute top-[5%] left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none"
+        animate={{ scale: [1, 1.12, 1] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          x: orb1X,
+          y: orb1Y,
+          background: "radial-gradient(circle, rgba(140,193,176,0.22) 0%, rgba(0,118,79,0.12) 45%, transparent 70%)",
+          filter: "blur(40px)",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-[0%] right-[5%] w-[600px] h-[600px] rounded-full pointer-events-none"
+        animate={{ scale: [1, 1.18, 1] }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        style={{
+          x: orb2X,
+          y: orb2Y,
+          background: "radial-gradient(circle, rgba(217,234,229,0.16) 0%, rgba(140,193,176,0.1) 40%, transparent 70%)",
+          filter: "blur(50px)",
+        }}
+      />
+
+      <motion.div
+        className="absolute top-[12%] left-[20%] w-48 h-48 rounded-3xl pointer-events-none opacity-20"
         animate={{ rotate: [0, 360] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        style={{  x: floatCardX, background: "linear-gradient(135deg, rgba(140,193,176,0.15) 0%, rgba(0,118,79,0.05) 100%)" }}
+        transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: "linear-gradient(135deg, rgba(140,193,176,0.3) 0%, rgba(0,118,79,0.1) 100%)",
+          border: "1px solid rgba(140,193,176,0.25)",
+          backdropFilter: "blur(4px)",
+        }}
       />
-
       <motion.div
-        style={{ x: pillX }}
-        className="absolute bottom-[30%] left-[5%] w-20 h-20 rounded-full border border-white/20 opacity-40 pointer-events-none"
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[20%] left-[8%] w-24 h-24 rounded-full pointer-events-none opacity-30"
+        animate={{ y: [0, -24, 0], rotate: [0, 180, 360] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        style={{
+          background: "rgba(140,193,176,0.15)",
+          border: "1px solid rgba(140,193,176,0.3)",
+        }}
       />
-
       <motion.div
-        className="absolute top-[35%] right-[10%] w-12 h-12 rounded-xl border border-[#8CC1B0]/30 opacity-50 pointer-events-none"
-        animate={{ rotate: [0, 180, 360], y: [0, 15, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        style={{ background: "rgba(140,193,176,0.1)" }}
+        className="absolute top-[45%] left-[5%] w-14 h-14 rounded-2xl pointer-events-none opacity-25"
+        animate={{ y: [0, 16, 0], rotate: [0, -90, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        style={{
+          background: "rgba(217,234,229,0.12)",
+          border: "1px solid rgba(217,234,229,0.25)",
+        }}
+      />
+      <motion.div
+        className="absolute top-[25%] right-[28%] w-8 h-8 rounded-full pointer-events-none"
+        animate={{ y: [0, -12, 0], opacity: [0.3, 0.7, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        style={{ background: "rgba(140,193,176,0.5)" }}
       />
 
       <motion.div
         style={{ y: textY, opacity }}
         className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full pt-28 pb-16"
       >
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-16">
 
-          <div className="w-full lg:w-1/2 text-right">
+          <div className="w-full lg:w-[52%] text-right">
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/20 text-white/80 text-xs mb-6"
+              transition={{ duration: 0.55, delay: 0.1 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{
+                background: "rgba(140,193,176,0.12)",
+                border: "1px solid rgba(140,193,176,0.3)",
+                backdropFilter: "blur(12px)",
+              }}
             >
-              <span className="w-2 h-2 rounded-full bg-[#01E194] animate-pulse" />
-              مجموعه تابستان ۱۴۰۴
+              <span className="w-1.5 h-1.5 rounded-full bg-[#8CC1B0] animate-pulse" />
+              <span className="text-[#D9EAE5] text-xs font-medium">مجموعه LIA</span>
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.15] text-white"
+              transition={{ duration: 0.85, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.2] text-white"
             >
               زیبایی در جزئیات
               <br />
-              <span className="shimmer-text">
+              <span className="shimmer-text text-[0.9em]">
                 <TypingText />
               </span>
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-5 text-base text-white/70 max-w-md leading-relaxed"
+              transition={{ duration: 0.7, delay: 0.38 }}
+              className="mt-5 text-[15px] text-white/60 max-w-md leading-loose"
             >
               مجموعه‌ای منتخب از اکسسوری‌های طراحی‌شده با دقت و ظرافت — برای لحظاتی که اهمیت دارند.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.52 }}
+              transition={{ duration: 0.65, delay: 0.5 }}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
@@ -196,7 +224,6 @@ export default function Hero() {
                   <ArrowLeft size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
                 </Link>
               </motion.div>
-
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <Link href="/collections" className="btn-ghost gap-2">
                   کالکشن جدید
@@ -207,18 +234,18 @@ export default function Hero() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.72 }}
-              className="mt-10 flex items-center gap-5"
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="mt-10 flex items-center gap-6"
             >
               {badges.map(({ icon: Icon, label }, i) => (
                 <motion.div
                   key={label}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.75 + i * 0.12 }}
-                  className="flex items-center gap-1.5 text-white/60 text-xs"
+                  transition={{ delay: 0.72 + i * 0.1 }}
+                  className="flex items-center gap-1.5 text-white/50 text-xs"
                 >
-                  <Icon size={13} className="text-[#8CC1B0]" />
+                  <Icon size={12} className="text-[#8CC1B0]" />
                   {label}
                 </motion.div>
               ))}
@@ -226,64 +253,107 @@ export default function Hero() {
           </div>
 
           <motion.div
-            style={{ y: imgY }}
-            className="hidden lg:flex lg:w-1/2 justify-center items-center"
+            className="hidden lg:flex lg:w-[48%] justify-center items-center relative"
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative w-[400px] h-[460px]">
+            <div className="relative w-[340px] h-[420px]">
               <motion.div
+                className="w-full h-full rounded-[2rem] overflow-hidden"
                 style={{
-                  rotateY: cardRotateY,
-                  rotateX: cardRotateX,
+                  rotateY: cardTiltY,
+                  rotateX: cardTiltX,
                   transformStyle: "preserve-3d" as const,
-                }}
-                className="w-full h-full rounded-3xl overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.4)]"
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <img src="/favicon1.png" alt="محصول ویژه" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-              </motion.div>
-
-              <motion.div
-                className="absolute -bottom-6 -right-6 glass-light rounded-2xl px-4 py-3 shadow-xl border border-white/60"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0, y: [0, -8, 0] }}
-                transition={{
-                  opacity: { delay: 0.9, duration: 0.6 },
-                  x: { delay: 0.9, duration: 0.6 },
-                  y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 },
+                  background: "linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(140,193,176,0.08) 100%)",
+                  backdropFilter: "blur(24px)",
+                  border: "1px solid rgba(255,255,255,0.18)",
+                  boxShadow: "0 32px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15)",
                 }}
               >
-                <p className="text-[10px] text-gray-500 text-right">محبوب‌ترین</p>
-                <p className="text-sm font-bold text-[#00764F] text-right">گردنبند مرواریدی</p>
-                <p className="text-xs text-gray-600 text-right">۱۲۹,۰۰۰ تومان</p>
-              </motion.div>
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 gap-6">
+                  <motion.div
+                    animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-28 h-28 rounded-2xl flex items-center justify-center"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(0,118,79,0.6) 0%, rgba(140,193,176,0.4) 100%)",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      boxShadow: "0 16px 40px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
+                    }}
+                  >
+                    <Gem size={40} className="text-white/90" />
+                  </motion.div>
 
-              <motion.div
-                className="absolute -top-4 -left-4 glass rounded-xl px-3 py-2.5 border border-white/20 shadow-lg"
-                style={{ y: pillY }}
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.1, duration: 0.6 }}
-              >
-                <div className="flex items-center gap-1.5">
-                  <div className="flex -space-x-1 rtl:space-x-reverse">
-                    {[1, 2, 3].map((n) => (
-                      <div key={n} className="w-5 h-5 rounded-full bg-gradient-to-br from-[#8CC1B0] to-[#00764F] border-2 border-white/20" />
+                  <div className="text-center">
+                    <p className="text-white/50 text-xs mb-1">کالکشن ویژه</p>
+                    <p className="text-white font-bold text-lg">LIA Collection</p>
+                    <p className="text-[#8CC1B0] text-sm mt-1">۱۴۰۴</p>
+                  </div>
+
+                  <div className="w-full flex flex-col gap-2">
+                    {["گردنبند", "دستبند", "گوشواره"].map((item, i) => (
+                      <motion.div
+                        key={item}
+                        initial={{ opacity: 0, x: 12 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 1.2 + i * 0.12 }}
+                        className="flex items-center justify-between px-3 py-2 rounded-xl"
+                        style={{
+                          background: "rgba(255,255,255,0.07)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                        }}
+                      >
+                        <span className="text-white/40 text-[10px]">موجود</span>
+                        <span className="text-white text-xs font-medium">{item}</span>
+                      </motion.div>
                     ))}
                   </div>
-                  <p className="text-white text-[11px] font-medium">+۲۸۰ خریدار</p>
                 </div>
+
+                <div
+                  className="absolute inset-0 rounded-[2rem] pointer-events-none"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%, rgba(0,118,79,0.1) 100%)",
+                  }}
+                />
               </motion.div>
 
+              {floatingCards.map((card, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute z-10 px-3.5 py-2.5 rounded-2xl"
+                  style={{
+                    top: card.top,
+                    right: card.right,
+                    left: card.left,
+                    background: "rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
+                  transition={{
+                    opacity: { delay: card.delay, duration: 0.5 },
+                    scale: { delay: card.delay, duration: 0.5 },
+                    y: { duration: card.floatDur, repeat: Infinity, ease: "easeInOut", delay: card.delay + 0.5 },
+                  }}
+                >
+                  <p className="text-[#8CC1B0] text-[9px] font-medium text-right">{card.sub}</p>
+                  <p className="text-white text-[11px] font-bold text-right">{card.label}</p>
+                </motion.div>
+              ))}
+
               <motion.div
-                className="absolute top-1/2 -right-10 w-20 h-20 rounded-2xl glass border border-white/15 flex items-center justify-center"
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-              >
-                <span className="text-2xl text-white/60">✦</span>
-              </motion.div>
+                className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-64 h-8 rounded-full pointer-events-none"
+                animate={{ opacity: [0.3, 0.6, 0.3], scaleX: [1, 1.05, 1] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  background: "radial-gradient(ellipse, rgba(0,118,79,0.4) 0%, transparent 70%)",
+                  filter: "blur(12px)",
+                }}
+              />
             </div>
           </motion.div>
 
@@ -292,15 +362,16 @@ export default function Hero() {
 
       <motion.div
         style={{ opacity }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
       >
-        <p className="text-white/40 text-xs">اسکرول کنید</p>
+        <p className="text-white/30 text-[11px] tracking-widest">اسکرول</p>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="w-5 h-8 rounded-full border border-white/25 flex items-start justify-center pt-1.5"
+          animate={{ y: [0, 7, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity }}
+          className="w-5 h-8 rounded-full flex items-start justify-center pt-1.5"
+          style={{ border: "1px solid rgba(255,255,255,0.2)" }}
         >
-          <div className="w-1 h-2 rounded-full bg-white/50" />
+          <div className="w-1 h-2 rounded-full bg-white/40" />
         </motion.div>
       </motion.div>
     </section>
