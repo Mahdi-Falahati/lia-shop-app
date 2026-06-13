@@ -7,11 +7,11 @@ import { ShoppingCart, Search, X, ArrowLeft } from "lucide-react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 
 const navLinks = [
-  { href: "/", label: "خانه" },
-  { href: "/shop", label: "فروشگاه" },
-  { href: "/collections", label: "کالکشن‌ها" },
-  { href: "/about", label: "درباره ما" },
-  { href: "/contact", label: "تماس" },
+  { href: "/", label: "خانه", scroll: false },
+  { href: "/shop", label: "فروشگاه", scroll: false },
+  { href: "#categories", label: "دسته‌بندی", scroll: true },
+  { href: "/about", label: "درباره ما", scroll: false },
+  { href: "/contact", label: "تماس", scroll: false },
 ]
 
 export default function Navbar() {
@@ -28,6 +28,15 @@ export default function Navbar() {
     return () => { document.body.style.overflow = "" }
   }, [menuOpen])
 
+  const handleScrollLink = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    const el = document.getElementById(id.replace("#", ""))
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" })
+    }
+    setMenuOpen(false)
+  }
+
   return (
     <>
       <motion.header
@@ -36,8 +45,8 @@ export default function Navbar() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,118,79,0.10)] border-b border-[#D9EAE5]/60"
-            : "bg-black/20 backdrop-blur-md border-b border-white/10"
+            ? "bg-white/92 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,118,79,0.10)] border-b border-[#D9EAE5]/60"
+            : "bg-gradient-to-b from-black/52 to-black/8 backdrop-blur-[6px] border-b border-white/10 shadow-[0_2px_24px_rgba(0,0,0,0.22)]"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-10 h-[72px] flex items-center justify-between">
@@ -59,7 +68,7 @@ export default function Navbar() {
             </motion.div>
             <span
               className={`text-xl font-black tracking-tight transition-all duration-300 ${
-                scrolled ? "text-gradient" : "text-white drop-shadow-sm"
+                scrolled ? "text-gradient" : "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
               }`}
             >
               LIA
@@ -68,17 +77,18 @@ export default function Navbar() {
 
           <nav className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
-                className={`nav-link-underline relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 ${
+                onClick={link.scroll ? (e) => handleScrollLink(e as React.MouseEvent<HTMLAnchorElement>, link.href) : undefined}
+                className={`nav-link-underline relative px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
                   scrolled
                     ? "text-gray-700 hover:text-[#00764F] hover:bg-[#00764F]/6"
-                    : "text-white/95 hover:text-white hover:bg-white/12"
+                    : "text-white hover:text-white hover:bg-white/14 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]"
                 }`}
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
           </nav>
 
@@ -182,17 +192,17 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.07 + i * 0.055, duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <Link
+                    <a
                       href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className="group flex items-center justify-between px-4 py-3.5 rounded-2xl text-gray-800 hover:bg-[#00764F]/8 hover:text-[#00764F] transition-all duration-200 font-medium text-[15px]"
+                      onClick={link.scroll ? (e) => handleScrollLink(e as React.MouseEvent<HTMLAnchorElement>, link.href) : () => setMenuOpen(false)}
+                      className="group flex items-center justify-between px-4 py-3.5 rounded-2xl text-gray-800 hover:bg-[#00764F]/8 hover:text-[#00764F] transition-all duration-200 font-medium text-[15px] cursor-pointer"
                     >
                       <span>{link.label}</span>
                       <ArrowLeft
                         size={14}
                         className="opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all duration-200 text-[#00764F]"
                       />
-                    </Link>
+                    </a>
                   </motion.div>
                 ))}
               </nav>
