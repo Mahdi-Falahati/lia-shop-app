@@ -188,16 +188,18 @@
   .nav-link-underline::after {
     content: "";
     position: absolute;
-    bottom: -3px;
+    bottom: 0;
     right: 0;
+    left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #00764F, #8CC1B0);
+    background: linear-gradient(90deg, #8CC1B0, #00764F);
     border-radius: 2px;
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0 auto;
   }
   .nav-link-underline:hover::after {
-    width: 100%;
+    width: calc(100% - 2rem);
   }
 
   .btn-primary {
@@ -219,7 +221,7 @@
     transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     transform: translateY(0);
     text-decoration: none;
-    cursor: none;
+    cursor: pointer;
   }
   .btn-primary:hover {
     box-shadow:
@@ -254,7 +256,7 @@
     transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     transform: translateY(0);
     text-decoration: none;
-    cursor: none;
+    cursor: pointer;
   }
   .btn-ghost:hover {
     background: rgba(255, 255, 255, 0.18);
@@ -283,7 +285,7 @@
     box-shadow: 0 2px 8px rgba(0, 118, 79, 0.06);
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
     text-decoration: none;
-    cursor: none;
+    cursor: pointer;
   }
   .btn-outline-brand:hover {
     background: rgba(0, 118, 79, 0.08);
@@ -302,7 +304,7 @@
       0 4px 16px rgba(0, 118, 79, 0.4),
       inset 0 1px 0 rgba(255, 255, 255, 0.2);
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: none;
+    cursor: pointer;
   }
   .btn-card-primary:hover {
     box-shadow:
@@ -323,16 +325,10 @@
     border: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
     transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: none;
+    cursor: pointer;
   }
   .btn-card-ghost:hover {
     background: rgba(255, 255, 255, 0.22);
     border-color: rgba(255, 255, 255, 0.38);
-  }
-}
-
-@media (pointer: fine) and (min-width: 768px) {
-  *, *::before, *::after {
-    cursor: none !important;
   }
 }

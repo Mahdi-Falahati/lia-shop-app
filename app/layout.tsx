@@ -1,7 +1,7 @@
 import "./globals.css"
 import type { Metadata } from "next"
 import Navbar from "@/components/layout/Navbar"
-import CustomCursor from "@/components/ui/CustomCursor"
+import Footer from "@/components/layout/Footer"
 
 export const metadata: Metadata = {
   title: "LIA — اکسسوری‌های لوکس",
@@ -12,9 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fa" dir="rtl">
       <body className="bg-white text-gray-800 antialiased">
-        <CustomCursor />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   )
