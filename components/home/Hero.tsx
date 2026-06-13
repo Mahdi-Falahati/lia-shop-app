@@ -253,7 +253,7 @@ export default function Hero() {
           </div>
 
           <motion.div
-            className="hidden lg:flex lg:w-[48%] justify-center items-center relative"
+            className="hidden sm:flex sm:w-[48%] justify-center items-center relative"
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
