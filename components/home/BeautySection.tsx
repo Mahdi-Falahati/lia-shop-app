@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowLeft, Sparkles } from "lucide-react"
+import ProductCard from "@/components/ui/ProductCard"
 
 const beautyItems = [
   {
@@ -10,46 +11,39 @@ const beautyItems = [
     name: "کرم مرطوب‌کننده روز",
     price: 185000,
     image: "/p1.jpg",
-    tag: "پرفروش",
+    category: "آرایشی بهداشتی",
   },
   {
     id: "b2",
     name: "سرم روشن‌کننده ویتامین C",
     price: 265000,
     image: "/p2.jpg",
-    tag: "جدید",
+    category: "آرایشی بهداشتی",
   },
   {
     id: "b3",
     name: "ماسک شب آرگان",
     price: 149000,
     image: "/p3.jpg",
-    tag: "محبوب",
+    category: "آرایشی بهداشتی",
   },
   {
     id: "b4",
     name: "اسپری تثبیت‌کننده آرایش",
     price: 98000,
     image: "/p1.jpg",
-    tag: "تخفیف",
+    category: "آرایشی بهداشتی",
   },
 ]
 
-const tagColors: Record<string, { bg: string; text: string }> = {
-  پرفروش: { bg: "rgba(0,118,79,0.12)", text: "#00764F" },
-  جدید: { bg: "rgba(1,225,148,0.15)", text: "#009960" },
-  محبوب: { bg: "rgba(140,193,176,0.2)", text: "#4a8a75" },
-  تخفیف: { bg: "rgba(220,38,38,0.1)", text: "#dc2626" },
-}
-
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.09 } },
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 22 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
+const cardVariants = {
+  hidden: { opacity: 0, y: 24, scale: 0.97 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.52, ease: "easeOut" as const } },
 }
 
 export default function BeautySection() {
@@ -88,58 +82,17 @@ export default function BeautySection() {
           viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-5"
         >
-          {beautyItems.map((item) => {
-            const tagStyle = tagColors[item.tag] ?? tagColors["محبوب"]
-            return (
-              <motion.div key={item.id} variants={itemVariants}>
-                <motion.article
-                  whileHover={{ y: -5, scale: 1.015 }}
-                  transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative rounded-2xl overflow-hidden bg-white
-                    shadow-[0_2px_12px_rgba(0,0,0,0.06)]
-                    hover:shadow-[0_20px_48px_rgba(0,118,79,0.16),0_6px_16px_rgba(0,0,0,0.08)]
-                    transition-shadow duration-300"
-                >
-                  <div className="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-[#EEF7F3] to-[#E0EFE8]">
-                    <motion.img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                    <div
-                      className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-bold"
-                      style={{ background: tagStyle.bg, color: tagStyle.text, border: `1px solid ${tagStyle.text}30` }}
-                    >
-                      {item.tag}
-                    </div>
-                  </div>
-
-                  <div className="p-3.5 text-right">
-                    <h3 className="text-[13px] font-semibold text-gray-800 line-clamp-1 group-hover:text-[#00764F] transition-colors duration-200">
-                      {item.name}
-                    </h3>
-                    <div className="flex items-center justify-between mt-2">
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-sm font-black text-[#00764F]">
-                          {item.price.toLocaleString("fa-IR")}
-                        </span>
-                        <span className="text-[9px] text-gray-400">تومان</span>
-                      </div>
-                      <Link
-                        href={`/beauty/${item.id}`}
-                        className="text-[10px] font-medium text-[#8CC1B0] hover:text-[#00764F] transition-colors duration-200"
-                      >
-                        جزئیات
-                      </Link>
-                    </div>
-                  </div>
-                </motion.article>
-              </motion.div>
-            )
-          })}
+          {beautyItems.map((item) => (
+            <motion.div key={item.id} variants={cardVariants}>
+              <ProductCard
+                id={item.id}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+                category={item.category}
+              />
+            </motion.div>
+          ))}
         </motion.div>
 
         <motion.div
