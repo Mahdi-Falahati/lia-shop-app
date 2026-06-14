@@ -10,7 +10,6 @@ import { usePathname } from "next/navigation"
 const navLinks = [
   { href: "/", label: "خانه", scroll: false },
   { href: "/shop", label: "فروشگاه", scroll: false },
-  { href: "#categories", label: "دسته‌بندی", scroll: true },
   { href: "/wishlist", label: "علاقه‌مندی", scroll: false },
   { href: "/about", label: "درباره ما", scroll: false },
   { href: "/contact", label: "تماس", scroll: false },

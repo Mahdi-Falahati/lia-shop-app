@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowLeft, Sparkles } from "lucide-react"
@@ -43,14 +44,32 @@ const containerVariants = {
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24, scale: 0.97 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.52, ease: "easeOut" as const } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.52, ease: "easeOut" as const },
+  },
 }
 
 export default function BeautySection() {
+  const [favoriteIds, setFavoriteIds] = useState<Array<string | number>>([])
+
+  const handleToggleFavorite = (id: string | number) => {
+    setFavoriteIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id]
+    )
+  }
+
+  const handleAddToCart = (id: string | number) => {
+    console.log(`محصول ${id} به سبد خرید اضافه شد`)
+  }
+
   return (
     <section className="py-20">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -69,9 +88,15 @@ export default function BeautySection() {
             <div className="mt-2 w-10 h-1 bg-gradient-to-l from-[#00764F] to-[#8CC1B0] rounded-full mr-auto" />
           </div>
 
-          <Link href="/beauty" className="btn-outline-brand group hidden md:flex items-center gap-2">
+          <Link
+            href="/beauty"
+            className="btn-outline-brand group hidden md:flex items-center gap-2"
+          >
             مشاهده همه
-            <ArrowLeft size={13} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
+            <ArrowLeft
+              size={13}
+              className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200"
+            />
           </Link>
         </motion.div>
 
@@ -90,6 +115,10 @@ export default function BeautySection() {
                 price={item.price}
                 image={item.image}
                 category={item.category}
+                mode="shop"
+                isFavorite={favoriteIds.includes(item.id)}
+                onToggleFavorite={handleToggleFavorite}
+                onAddToCart={handleAddToCart}
               />
             </motion.div>
           ))}
@@ -107,7 +136,6 @@ export default function BeautySection() {
             <ArrowLeft size={13} className="-rotate-180" />
           </Link>
         </motion.div>
-
       </div>
     </section>
   )

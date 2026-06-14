@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, Star, Shield, Truck, Gem } from "lucide-react"
+import { ArrowRight, Star, Shield, Truck, Gem } from "lucide-react"
 
 const TYPING_LINES = [
   "اکسسوری‌های لوکس برای شما",
@@ -220,12 +220,13 @@ export default function Hero() {
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <Link href="/shop" className="btn-primary gap-2 group">
                   مشاهده فروشگاه
-                  <ArrowLeft size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
+                  <ArrowRight size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
                 </Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link href="/collections" className="btn-ghost gap-2">
-                  کالکشن جدید
+                <Link href="#categories" className="btn-ghost gap-2">
+                  دسته بندی
+                  <ArrowRight size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
                 </Link>
               </motion.div>
             </motion.div>
