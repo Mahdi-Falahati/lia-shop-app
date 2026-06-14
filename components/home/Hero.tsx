@@ -172,8 +172,7 @@ export default function Hero() {
         style={{ y: textY, opacity }}
         className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full pt-28 pb-16"
       >
-        <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-16">
-
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           <div className="w-full lg:w-[52%] text-right">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
