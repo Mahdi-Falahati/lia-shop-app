@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { ShoppingCart, Search, X, ArrowLeft } from "lucide-react"
+import { ShoppingCart, CircleUser, X, ArrowLeft } from "lucide-react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
 import { usePathname } from "next/navigation"
 
@@ -102,26 +102,26 @@ export default function Navbar() {
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
-              aria-label="جستجو"
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
+              aria-label="حساب کاربری"
+              className={`w-10 h-10 cursor-pointer rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
                 ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
                 : !isHome
-                  ? "text-gray/90 hover:text-white hover:bg-white/15"
-                  : "text-white/90 hover:text-white hover:bg-white/15"
+                  ? "text-gray/90 hover:text-gray hover:bg-white/15"
+                  : "text-white/90 hover:text-gray hover:bg-gray/15"
                 }`}
             >
-              <Search size={18} />
+              <Link href="/auth" aria-label="صفحه کاربری"> <CircleUser size={18} /> </Link>
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               aria-label="سبد خرید"
-              className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
+              className={`cursor-pointer relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
                 ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
                 : !isHome
-                  ? "text-gray hover:text-white hover:bg-white/15"
-                  : "text-white/90 hover:text-white hover:bg-white/15"
+                  ? "text-gray hover:text-gray hover:bg-white/15"
+                  : "text-white/90 hover:text-gray hover:bg-gray/15"
                 }`}
             >
               <ShoppingCart size={18} />
