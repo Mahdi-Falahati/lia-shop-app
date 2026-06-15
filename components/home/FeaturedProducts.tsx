@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import ProductCard from "@/components/ui/ProductCard"
@@ -26,10 +27,23 @@ const cardVariants = {
 }
 
 export default function FeaturedProducts() {
+  const [favoriteIds, setFavoriteIds] = useState<Array<string | number>>([])
+
+  const handleToggleFavorite = (id: string | number) => {
+    setFavoriteIds((prev) =>
+      prev.includes(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id]
+    )
+  }
+
+  const handleAddToCart = (id: string | number) => {
+    console.log(`محصول ${id} به سبد خرید اضافه شد`)
+  }
+
   return (
     <section className="py-20 bg-gradient-to-b from-white to-[#E6F1ED]/40">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +66,10 @@ export default function FeaturedProducts() {
             className="btn-outline-brand group hidden md:flex items-center gap-2"
           >
             مشاهده همه
-            <ArrowLeft size={13} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
+            <ArrowLeft
+              size={13}
+              className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200"
+            />
           </Link>
         </motion.div>
 
@@ -71,6 +88,10 @@ export default function FeaturedProducts() {
                 price={p.price}
                 image={p.image}
                 category={p.category}
+                mode="shop"
+                isFavorite={favoriteIds.includes(p.id)}
+                onToggleFavorite={handleToggleFavorite}
+                onAddToCart={handleAddToCart}
               />
             </motion.div>
           ))}
@@ -88,7 +109,6 @@ export default function FeaturedProducts() {
             <ArrowLeft size={13} className="-rotate-180" />
           </Link>
         </motion.div>
-
       </div>
     </section>
   )

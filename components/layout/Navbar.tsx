@@ -3,13 +3,13 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { ShoppingCart, Search, X, ArrowLeft } from "lucide-react"
+import { ShoppingCart, CircleUser, X, ArrowLeft } from "lucide-react"
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion"
+import { usePathname } from "next/navigation"
 
 const navLinks = [
   { href: "/", label: "خانه", scroll: false },
   { href: "/shop", label: "فروشگاه", scroll: false },
-  { href: "#categories", label: "دسته‌بندی", scroll: true },
   { href: "/wishlist", label: "علاقه‌مندی", scroll: false },
   { href: "/about", label: "درباره ما", scroll: false },
   { href: "/contact", label: "تماس", scroll: false },
@@ -38,17 +38,19 @@ export default function Navbar() {
     setMenuOpen(false)
   }
 
+  const pathname = usePathname()
+  const isHome = pathname === "/"
+
   return (
     <>
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-white/92 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,118,79,0.10)] border-b border-[#D9EAE5]/60"
-            : "bg-gradient-to-b from-black/52 to-black/8 backdrop-blur-[6px] border-b border-white/10 shadow-[0_2px_24px_rgba(0,0,0,0.22)]"
-        }`}
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled
+          ? "bg-white/92 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,118,79,0.10)] border-b border-[#D9EAE5]/60"
+          : "bg-[gradient-to-b from-black/52 to-black/8 backdrop-blur-[6px] border-b border-white/10 shadow-[0_2px_24px_rgba(0,0,0,0.22)]]"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-10 h-[72px] flex items-center justify-between">
 
@@ -68,25 +70,28 @@ export default function Navbar() {
               />
             </motion.div>
             <span
-              className={`text-xl font-black tracking-tight transition-all duration-300 ${
-                scrolled ? "text-gradient" : "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
-              }`}
+              className={`text-xl font-black tracking-tight transition-all duration-300 ${scrolled
+                ? "text-gradient"
+                : isHome
+                  ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
+                  : "text-black drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
+                }`}
             >
               LIA
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-0.5">
+          <nav className={`hidden md:flex items-center gap-0.5 ${scrolled ? "text-gray" : isHome ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" : "text-gray drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
+            }`}>
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={link.scroll ? (e) => handleScrollLink(e as React.MouseEvent<HTMLAnchorElement>, link.href) : undefined}
-                className={`nav-link-underline relative px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer ${
-                  scrolled
-                    ? "text-gray-700 hover:text-[#00764F] hover:bg-[#00764F]/6"
-                    : "text-white hover:text-white hover:bg-white/14 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]"
-                }`}
+                className={`nav-link-underline relative px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 cursor-pointer ${scrolled
+                  ? "text-gray-700 hover:text-[#00764F] hover:bg-[#00764F]/6"
+                  : "text-white hover:text-white hover:bg-white/14 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]"
+                  }`}
               >
                 {link.label}
               </a>
@@ -97,25 +102,27 @@ export default function Navbar() {
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
-              aria-label="جستجو"
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
-                scrolled
-                  ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
-                  : "text-white/90 hover:text-white hover:bg-white/15"
-              }`}
+              aria-label="حساب کاربری"
+              className={`w-10 h-10 cursor-pointer rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
+                ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
+                : !isHome
+                  ? "text-gray/90 hover:text-gray hover:bg-white/15"
+                  : "text-white/90 hover:text-gray hover:bg-gray/15"
+                }`}
             >
-              <Search size={18} />
+              <Link href="/auth" aria-label="صفحه کاربری"> <CircleUser size={18} /> </Link>
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.92 }}
               aria-label="سبد خرید"
-              className={`relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
-                scrolled
-                  ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
-                  : "text-white/90 hover:text-white hover:bg-white/15"
-              }`}
+              className={`cursor-pointer relative w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${scrolled
+                ? "text-gray-600 hover:text-[#00764F] hover:bg-[#00764F]/8"
+                : !isHome
+                  ? "text-gray hover:text-gray hover:bg-white/15"
+                  : "text-white/90 hover:text-gray hover:bg-gray/15"
+                }`}
             >
               <ShoppingCart size={18} />
               <span className="absolute -top-1 -right-1 w-4.5 h-4.5 min-w-[18px] min-h-[18px] rounded-full bg-gradient-to-br from-[#00764F] to-[#8CC1B0] text-white text-[9px] font-bold flex items-center justify-center shadow-md leading-none px-1">
@@ -128,9 +135,8 @@ export default function Navbar() {
               whileTap={{ scale: 0.94 }}
               onClick={() => setMenuOpen(true)}
               aria-label="باز کردن منو"
-              className={`md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-[5px] transition-all duration-200 ${
-                scrolled ? "hover:bg-[#00764F]/8" : "hover:bg-white/15"
-              }`}
+              className={`md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-[5px] transition-all duration-200 ${scrolled ? "hover:bg-[#00764F]/8" : "hover:bg-white/15"
+                }`}
             >
               <span className={`block w-5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"}`} />
               <span className={`block w-3.5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"} mr-auto`} />

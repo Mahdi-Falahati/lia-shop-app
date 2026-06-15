@@ -37,15 +37,15 @@ export default function PromoBanner() {
             <div className="text-right">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 border border-white/20 text-white/80 text-xs font-medium mb-3">
                 <Sparkles size={11} />
-                پیشنهاد ویژه تابستان
+                پیشنهاد ویژه 
               </div>
               <h3 className="text-2xl md:text-3xl font-black text-white leading-snug">
-                تخفیف تا ۳۰٪
+                ٪ تخفیف ها ٪
                 <br />
-                <span className="text-[#D9EAE5]">روی محصولات منتخب</span>
+                <span className="text-[#D9EAE5]">روی محصولات با ارزش</span>
               </h3>
-              <p className="mt-2 text-sm text-white/70 max-w-sm">
-                انتخاب‌های منتخب با تخفیف محدود — همین حالا بهترین زمان خرید است.
+              <p className="mt-2 text-sm text-white/70">
+                به انتخاب شما با تخفیف محدود — همین حالا بهترین زمان خرید است.
               </p>
             </div>
 
@@ -58,7 +58,7 @@ export default function PromoBanner() {
                   hover:bg-[#E6F1ED]
                   transition-all duration-300"
               >
-                مشاهده فروشگاه
+                مشاهده تخفیف ها در فروشگاه
                 <ArrowLeft size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
               </Link>
             </motion.div>

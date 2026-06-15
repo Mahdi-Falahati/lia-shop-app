@@ -6,23 +6,23 @@ import { Shield, ArrowLeft, Heart, Clock, Monitor, Star } from "lucide-react"
 
 const stats = [
   { num: "+۵۰۰۰", label: "مشتری راضی" },
-  { num: "+۲۰۰",  label: "محصول منحصربه‌فرد" },
+  { num: "+۲۰۰", label: "محصول منحصربه‌فرد" },
   { num: "۳ سال", label: "تجربه و اعتماد" },
 ]
 
 const values = [
-  { icon: Shield,  title: "ضمانت اصالت کالا", desc: "تمامی محصولات ما اصل و دارای گارانتی بازگشت هستند." },
-  { icon: ArrowLeft, title: "ارسال سریع",      desc: "ارسال به سراسر ایران با بسته‌بندی اختصاصی LIA." },
-  { icon: Heart,   title: "مشتری‌مداری",      desc: "پشتیبانی آنلاین و پاسخگویی سریع در تمام مراحل خرید." },
-  { icon: Clock,   title: "به‌روز بودن",       desc: "هر هفته محصولات جدید با آخرین ترندهای روز دنیا." },
-  { icon: Monitor, title: "خرید آسان",         desc: "رابط کاربری ساده، درگاه امن و پرداخت راحت." },
-  { icon: Star,    title: "کیفیت برتر",        desc: "انتخاب دقیق محصولات از بهترین تامین‌کنندگان داخلی و خارجی." },
+  { icon: Shield, title: "ضمانت اصالت کالا", desc: "تمامی محصولات ما اصل و دارای گارانتی بازگشت هستند." },
+  { icon: ArrowLeft, title: "ارسال سریع", desc: "ارسال به سراسر ایران با بسته‌بندی اختصاصی LIA." },
+  { icon: Heart, title: "مشتری‌مداری", desc: "پشتیبانی آنلاین و پاسخگویی سریع در تمام مراحل خرید." },
+  { icon: Clock, title: "به‌روز بودن", desc: "هر هفته محصولات جدید با آخرین ترندهای روز دنیا." },
+  { icon: Monitor, title: "خرید آسان", desc: "رابط کاربری ساده، درگاه امن و پرداخت راحت." },
+  { icon: Star, title: "کیفیت برتر", desc: "انتخاب دقیق محصولات از بهترین تامین‌کنندگان داخلی و خارجی." },
 ]
 
 const team = [
-  { initial: "ل", name: "لیا احمدی",    role: "بنیان‌گذار و مدیر برند",   bio: "ایده LIA از ذوق و علاقه لیا به طراحی جواهرات شکل گرفت." },
-  { initial: "م", name: "مهدی فلاحتی", role: "طراح و توسعه‌دهنده",        bio: "مسئول طراحی تجربه کاربری و ساختار فنی سایت LIA." },
-  { initial: "س", name: "سارا رضایی",  role: "مسئول پشتیبانی",             bio: "همراه مشتریان در تمام مراحل خرید و پاسخگویی سریع." },
+  { initial: "ع", name: "علی موهدی", role: "بنیان‌گذار و مدیر برند", bio: "ایده LIA از ذوق و علاقه لیا به طراحی جواهرات شکل گرفت." },
+  { initial: "م", name: "مهدی فلاحتی", role: "طراح و توسعه‌دهنده", bio: "مسئول طراحی تجربه کاربری و ساختار فنی سایت LIA." },
+  { initial: "س", name: "سارا رضایی", role: "مسئول پشتیبانی", bio: "همراه مشتریان در تمام مراحل خرید و پاسخگویی سریع." },
 ]
 
 const fadeUp = (delay = 0) => ({
@@ -36,45 +36,50 @@ export default function About() {
   return (
     <main dir="rtl" className="font-vazir text-[#1a2e24]">
 
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-[#e8f5ee] to-white text-right px-5 md:px-8">
+      <section className="relative overflow-hidden py-20 md:py-28 bg-gradient-to-b from-[#e8f5ee] to-white px-5 md:px-8 flex justify-center">
+
         <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-[#00c880]/10 blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00764F]/15 to-transparent" />
 
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...fadeUp(0)}>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00764F]/08 border border-[#00764F]/16 text-[11px] font-bold text-[#00764F] mb-5">
-              <span className="w-[5px] h-[5px] rounded-full bg-[#00c880]" />
-              درباره ما
-            </span>
-          </motion.div>
+        <div className="max-w-7xl w-full flex justify-center">
 
-          <motion.h1 {...fadeUp(0.07)} className="text-3xl md:text-4xl font-black text-[#0f1e16] leading-tight mb-4">
-            جواهرات و اکسسوری<br />
-            <span className="text-[#00764F]">با کیفیت، با سلیقه</span>
-          </motion.h1>
+          <div className="relative w-full max-w-2xl text-right p-8 md:p-12 rounded-3xl 
+    bg-white/40 backdrop-blur-xl border border-white/40
+    shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
 
-          <motion.p {...fadeUp(0.12)} className="text-[14px] text-[#1e3828]/55 leading-[1.9] max-w-lg mb-10">
-            LIA یک برند ایرانی متخصص در طراحی و عرضه اکسسوری‌های لوکس و محصولات آرایشی باکیفیت است. هدف ما این است که هر روز کمی زیباتر و باسلیقه‌تر باشید.
-          </motion.p>
+            {/* light glow */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#00c880]/20 blur-3xl rounded-full pointer-events-none" />
 
-          <motion.div {...fadeUp(0.16)} className="flex gap-8 flex-wrap">
-            {stats.map((s, i) => (
-              <div key={i} className="flex items-center gap-8">
-                <div className="text-right">
-                  <div className="text-[28px] font-black text-[#00764F] leading-none">{s.num}</div>
-                  <div className="text-[11px] text-[#1e3828]/45 font-medium mt-1">{s.label}</div>
-                </div>
-                {i < stats.length - 1 && (
-                  <div className="w-px self-stretch bg-[#00764F]/15" />
-                )}
-              </div>
-            ))}
-          </motion.div>
+            <motion.div {...fadeUp(0)}>
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00764F]/10 border border-[#00764F]/20 text-[11px] font-bold text-[#00764F] mb-5">
+                <span className="w-[5px] h-[5px] rounded-full bg-[#00c880]" />
+                درباره ما
+              </span>
+            </motion.div>
+
+            <motion.h1
+              {...fadeUp(0.07)}
+              className="text-3xl md:text-4xl font-black text-[#0f1e16] leading-tight mb-4"
+            >
+              جواهرات و اکسسوری
+              <br />
+              <span className="text-[#00764F]">با کیفیت، با سلیقه</span>
+            </motion.h1>
+
+            <motion.p
+              {...fadeUp(0.12)}
+              className="text-[14px] text-[#1e3828]/70 leading-[1.9] max-w-md"
+            >
+              LIA یک برند ایرانی متخصص در طراحی و عرضه اکسسوری‌های لوکس و محصولات
+              آرایشی باکیفیت است. هدف ما این است که هر روز کمی زیباتر و باسلیقه‌تر
+              باشید.
+            </motion.p>
+
+          </div>
+
         </div>
       </section>
 
-      {/* ── Story ── */}
       <section className="py-14 border-b border-[#00764F]/07 px-5 md:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <motion.div {...fadeUp(0)}>
@@ -121,7 +126,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Values ── */}
       <section className="py-14 bg-gradient-to-b from-[#f0f9f4] to-white border-b border-[#00764F]/06 px-5 md:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeUp(0)} className="text-right mb-7">
@@ -161,7 +165,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Team ── */}
       <section className="py-14 px-5 md:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeUp(0)} className="text-right mb-7">
@@ -194,7 +197,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
       <section
         className="py-14 px-5 md:px-8 text-center relative overflow-hidden"
         style={{ background: "linear-gradient(135deg,#0f2e1c,#1a4a2a)" }}

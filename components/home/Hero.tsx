@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, Star, Shield, Truck, Gem } from "lucide-react"
+import { ArrowRight, Star, Shield, Truck, Gem } from "lucide-react"
 
 const TYPING_LINES = [
   "اکسسوری‌های لوکس برای شما",
@@ -172,8 +172,7 @@ export default function Hero() {
         style={{ y: textY, opacity }}
         className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 w-full pt-28 pb-16"
       >
-        <div className="flex flex-col lg:flex-row items-center gap-14 lg:gap-16">
-
+        <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
           <div className="w-full lg:w-[52%] text-right">
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -221,12 +220,13 @@ export default function Hero() {
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <Link href="/shop" className="btn-primary gap-2 group">
                   مشاهده فروشگاه
-                  <ArrowLeft size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
+                  <ArrowRight size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
                 </Link>
               </motion.div>
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Link href="/collections" className="btn-ghost gap-2">
-                  کالکشن جدید
+                <Link href="#categories" className="btn-ghost gap-2">
+                  دسته بندی
+                  <ArrowRight size={14} className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200" />
                 </Link>
               </motion.div>
             </motion.div>
