@@ -55,6 +55,34 @@ export const products = [
     image: '/p2.jpg',
     category: 'دستبند',
   },
+  {
+    id: "b1",
+    name: "کرم مرطوب‌کننده روز",
+    price: 185000,
+    image: "/p1.jpg",
+    category: "آرایشی بهداشتی",
+  },
+  {
+    id: "b2",
+    name: "سرم روشن‌کننده ویتامین C",
+    price: 265000,
+    image: "/p2.jpg",
+    category: "آرایشی بهداشتی",
+  },
+  {
+    id: "b3",
+    name: "ماسک شب آرگان",
+    price: 149000,
+    image: "/p3.jpg",
+    category: "آرایشی بهداشتی",
+  },
+  {
+    id: "b4",
+    name: "اسپری تثبیت‌کننده آرایش",
+    price: 98000,
+    image: "/p1.jpg",
+    category: "آرایشی بهداشتی",
+  }
 ]
 
 export type Product = (typeof products)[number]

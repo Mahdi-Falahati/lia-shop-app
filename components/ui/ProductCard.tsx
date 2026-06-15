@@ -248,7 +248,7 @@ export default function ProductCard({
                 {addedToCart ? "به سبد اضافه شد ✓" : "افزودن به سبد"}
               </motion.button>
 
-              <Link href={`/product/${id}`} className="block">
+              <Link href={`/products/${id}`} className="block">
                 <motion.div
                   whileHover={{ scale: 1.03, y: -1 }}
                   whileTap={{ scale: 0.97 }}
