@@ -92,7 +92,7 @@ export default function AuthPage() {
   return (
     <main
       dir="rtl"
-      className="min-h-screen my-[50px] flex items-center justify-center px-4"
+      className="min-h-screen my-[60px] flex items-center justify-center px-4"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
