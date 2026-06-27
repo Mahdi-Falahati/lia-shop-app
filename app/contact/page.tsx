@@ -17,17 +17,16 @@ const card =
 
 export default function ContactPage() {
     return (
-        <main className="relative overflow-hidden bg-gradient-to-b from-[#e8f5ee] via-white to-white py-24 px-5 md:px-8 text-right">
+        <main className="relative overflow-hidden bg-gradient-to-b from-[#f0e8e0] to-white py-24 px-5 md:px-8 text-right">
 
-            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00c880]/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute top-40 -right-24 w-80 h-80 bg-[#00764F]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#5b4638]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute top-40 -right-24 w-80 h-80 bg-[#9b765d]/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="max-w-6xl mx-auto">
 
-                {/* ✅ هدر راست‌چین شد */}
                 <motion.div {...fadeUp()} className="mb-16 text-right">
 
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00764F]/10 border border-[#00764F]/20 text-[11px] font-bold text-[#00764F] mb-5">
+                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-gray-300 text-[11px] font-bold text-[#5b4638] mb-5">
                         تماس با ما
                     </span>
 
@@ -43,9 +42,6 @@ export default function ContactPage() {
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                    {/* ✅ PHONE → tel */}
-
                     <motion.a
                         {...fadeUp(0.1)}
                         href="tel:09120000000"
@@ -53,63 +49,55 @@ export default function ContactPage() {
                     >
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/40 to-transparent opacity-70 pointer-events-none" />
 
-                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#00764F]/15 text-[#00764F] mb-4">
+                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#5b4638] text-[#FFF] mb-4">
                             <Phone size={20} />
                         </div>
 
                         <p className="relative text-xs text-gray-500 mb-1">تلفن</p>
-                        <p className="relative text-sm font-semibold">09120000000</p>
+                        <p className="relative text-sm font-semibold">09928565924</p>
                     </motion.a>
-
-
-                    {/* ✅ EMAIL → mailto */}
 
                     <motion.a
                         {...fadeUp(0.15)}
-                        href="mailto:lia@gmail.com"
+                        href="http://ble.ir/lia_deesign"
                         className={card}
                     >
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/40 to-transparent opacity-70 pointer-events-none" />
 
-                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#00764F]/15 text-[#00764F] mb-4">
+                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#5b4638] text-[#FFF]  mb-4">
                             <Mail size={20} />
                         </div>
 
-                        <p className="relative text-xs text-gray-500 mb-1">ایمیل</p>
-                        <p className="relative text-sm font-semibold">lia@gmail.com</p>
+                        <p className="relative text-xs text-gray-500 mb-1">بله</p>
+                        <p className="relative text-sm font-semibold">@lia_deesign</p>
                     </motion.a>
-
-
-                    {/* Instagram */}
 
                     <motion.a
                         {...fadeUp(0.2)}
-                        href="https://instagram.com"
+                        href="https://instagram.com/lia_deesign"
                         target="_blank"
                         className={card}
                     >
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/40 to-transparent opacity-70 pointer-events-none" />
 
-                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#00764F]/15 text-[#00764F] mb-4">
+                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#5b4638] text-[#FFF]  mb-4">
                             <CircleFadingPlus size={20} />
                         </div>
 
                         <p className="relative text-xs text-gray-500 mb-1">اینستاگرام</p>
-                        <p className="relative text-sm font-semibold">@lia.shop</p>
+                        <p className="relative text-sm font-semibold">@lia_deesign</p>
                     </motion.a>
 
 
-                    {/* WhatsApp */}
-
                     <motion.a
                         {...fadeUp(0.25)}
-                        href="https://wa.me/989120000000"
+                        href="https://wa.me/989928565924"
                         target="_blank"
                         className={card}
                     >
                         <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/40 to-transparent opacity-70 pointer-events-none" />
 
-                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#00764F]/15 text-[#00764F] mb-4">
+                        <div className="relative w-12 h-12 mx-auto flex items-center justify-center rounded-xl bg-[#5b4638] text-[#FFF]  mb-4">
                             <MessageCircle size={20} />
                         </div>
 
@@ -119,8 +107,6 @@ export default function ContactPage() {
 
                 </div>
 
-                {/* آدرس */}
-
                 <motion.div {...fadeUp(0.35)} className="mt-16 flex justify-center">
 
                     <div className="relative max-w-xl w-full text-center bg-white/30 backdrop-blur-2xl border border-white/50 rounded-3xl p-8
@@ -128,7 +114,7 @@ export default function ContactPage() {
 
                         <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/40 to-transparent opacity-70 pointer-events-none" />
 
-                        <div className="relative flex justify-center mb-4 text-[#00764F]">
+                        <div className="relative flex justify-center mb-4 text-gray-700">
                             <MapPin size={22} />
                         </div>
 

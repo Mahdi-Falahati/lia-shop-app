@@ -99,10 +99,10 @@ export default function AuthPage() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <div className="rounded-[28px] bg-white border border-[#D1D5DB] shadow-[0_20px_70px_rgba(0,0,0,0.08)] p-7">
+        <div className="rounded-[28px] bg-white border border-[#d8c6b7] shadow-[0_20px_70px_rgba(91,70,56,0.08)] p-7">
 
           <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-[#0F172A]">
+            <h1 className="text-xl font-bold text-[#2a1a0e]">
               {mode === "login"
                 ? "ورود به حساب کاربری"
                 : "ساخت حساب کاربری"}
@@ -127,7 +127,7 @@ export default function AuthPage() {
                   onChange={(e) =>
                     setFullName(e.target.value)
                   }
-                  className="w-full rounded-xl border border-[#D1D5DB] px-4 py-3 outline-none focus:border-[#16A34A]"
+                  className="w-full rounded-xl border border-[#d8c6b7] px-4 py-3 outline-none focus:border-[#9b765d] transition-colors"
                 />
 
                 {!nameValid && fullName.length > 0 && (
@@ -142,7 +142,7 @@ export default function AuthPage() {
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
-                  className="w-full rounded-xl border border-[#D1D5DB] px-4 py-3 outline-none focus:border-[#16A34A]"
+                  className="w-full rounded-xl border border-[#d8c6b7] px-4 py-3 outline-none focus:border-[#9b765d] transition-colors"
                 />
 
                 {!emailValid && email.length > 0 && (
@@ -159,7 +159,7 @@ export default function AuthPage() {
               onChange={(e) =>
                 setPhone(e.target.value)
               }
-              className="w-full rounded-xl border border-[#D1D5DB] px-4 py-3 outline-none focus:border-[#16A34A]"
+              className="w-full rounded-xl border border-[#d8c6b7] px-4 py-3 outline-none focus:border-[#9b765d] transition-colors"
             />
 
             {!phoneValid && phone.length > 0 && (
@@ -172,7 +172,10 @@ export default function AuthPage() {
               <button
                 disabled={!canSend || loading}
                 onClick={sendOtp}
-                className="cursor-pointer w-full h-12 rounded-xl bg-[#16A34A] text-white font-medium hover:bg-[#15803D] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="cursor-pointer w-full h-12 rounded-xl text-white font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                style={{
+                  background: "linear-gradient(135deg,#9b765d,#5b4638)",
+                }}
               >
                 {loading
                   ? "در حال ارسال..."
@@ -198,7 +201,7 @@ export default function AuthPage() {
                     )}
 
                   {verified && (
-                    <p className="text-sm pb-3 text-[#16A34A]">
+                    <p className="text-sm pb-3 text-[#5b4638] text-center">
                       کد تایید شد
                     </p>
                   )}
@@ -206,7 +209,10 @@ export default function AuthPage() {
                   <button
                     disabled={!verified || loading}
                     onClick={submit}
-                    className="w-full h-12 rounded-xl bg-[#16A34A] text-white font-medium hover:bg-[#15803D] disabled:opacity-50"
+                    className="w-full cursor-pointer h-12 rounded-xl text-white font-medium disabled:opacity-50 transition-all"
+                    style={{
+                      background: "linear-gradient(135deg,#9b765d,#5b4638)",
+                    }}
                   >
                     {mode === "login"
                       ? "ورود"
@@ -217,7 +223,7 @@ export default function AuthPage() {
             )}
 
             {success && (
-              <div className="bg-[#ECFDF5] border border-[#A7F3D0] text-[#16A34A] p-3 text-center rounded-xl">
+              <div className="border text-center p-3 rounded-xl text-[#5b4638] bg-[#f0e8e0] border-[#d8c6b7]">
                 {success}
               </div>
             )}

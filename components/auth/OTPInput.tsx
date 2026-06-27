@@ -73,7 +73,7 @@ export default function OTPInput({ value, onChange }: Props) {
             maxLength={1}
             inputMode="numeric"
             autoComplete="one-time-code"
-            className="h-14 w-14 rounded-xl border border-[#E5E7EB] bg-white text-center text-lg font-bold text-[#111827] outline-none focus:border-[#16A34A] focus:ring-2 focus:ring-[#34D399]"
+            className="h-14 w-14 rounded-xl border border-[#d8c6b7] bg-white text-center text-lg font-bold text-[#2a1a0e] outline-none focus:border-[#9b765d] focus:ring-2 focus:ring-[#9b765d]/25"
           />
         ))}
       </div>
