@@ -45,38 +45,13 @@ const FloatingLuxury = () => {
                         }}
                         className="relative w-[22vw] h-[22vw] max-w-[240px] max-h-[240px] flex-shrink-0"
                     >
-                        {item.type === "float" ? (
-                            <motion.div
-                                animate={{
-                                    y: [0, -15, 0],
-                                    rotate: [0, 5, -5, 0],
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                className="w-full h-full"
-                            >
-                                <Image
-                                    src={item.src}
-                                    alt={item.alt}
-                                    fill
-                                    unoptimized
-                                    className="object-contain"
-                                />
-                            </motion.div>
-                        ) : (
-                            <div className="w-full h-full">
-                                <Image
-                                    src={item.src}
-                                    alt={item.alt}
-                                    fill
-                                    unoptimized
-                                    className="object-contain"
-                                />
-                            </div>
-                        )}
+                        <Image
+                            src={item.src}
+                            alt={item.alt}
+                            fill
+                            unoptimized
+                            className="object-contain"
+                        />
                     </motion.div>
                 ))}
             </div>
