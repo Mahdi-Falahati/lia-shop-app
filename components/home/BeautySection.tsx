@@ -24,18 +24,13 @@ const containerVariants = {
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
-}
+} as const
 
 export default function BeautySection() {
   const [favoriteIds, setFavoriteIds] = useState<(string | number)[]>([])
 
   const handleToggleFavorite = (id: string | number) => {
     setFavoriteIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
-  }
-
-  const handleAddToCart = (id: string | number) => {
-    console.log("Added to cart:", id)
-    // منطق سبد خریدت رو اینجا بنویس آرسی جان
   }
 
   return (
@@ -71,10 +66,8 @@ export default function BeautySection() {
                 name={item.name}
                 price={item.price}
                 image={item.image}
-                category={item.category}
                 isFavorite={favoriteIds.includes(item.id)}
                 onToggleFavorite={handleToggleFavorite}
-                onAddToCart={handleAddToCart}
               />
             </motion.div>
           ))}
