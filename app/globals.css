@@ -5,6 +5,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'IranNastaliq';
+  src: url('https://cdn.fontcdn.ir/Font/Persian/IranNastaliq/IranNastaliq.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -7,9 +7,9 @@ const channels = [
   {
     id: "bale",
     name: "بله",
-    handle: "@lia_shop",
+    handle: "@lia_deesign",
     description: "به کانال ما بپیوندید و از جدیدترین محصولات و تخفیف‌ها باخبر شوید.",
-    href: "https://ble.ir/lia_shop",
+    href: "https://ble.ir/lia_deesign",
     gradient: "linear-gradient(135deg, #1a73d4 0%, #0f56b3 100%)",
     glow: "rgba(26,115,212,0.35)",
     icon: (
@@ -27,9 +27,9 @@ const channels = [
   {
     id: "instagram",
     name: "اینستاگرام",
-    handle: "@lia.shop",
+    handle: "@lia_deesign",
     description: "ما را در اینستاگرام دنبال کنید و از پشت‌صحنه و کالکشن‌های جدید لذت ببرید.",
-    href: "https://instagram.com/lia.shop",
+    href: "https://instagram.com/lia_deesign",
     gradient: "linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
     glow: "rgba(220,39,67,0.35)",
     icon: (
@@ -38,7 +38,7 @@ const channels = [
       </svg>
     ),
     memberLabel: "دنبال‌کننده",
-    cta: "دنبال کردن",
+    cta: "دنبال کردن در اینستاگرام",
   },
 ]
 
@@ -54,10 +54,10 @@ export default function SocialJoin() {
           transition={{ duration: 0.55 }}
           className="text-center mb-10"
         >
-          <p className="text-[11px] font-bold text-[#8CC1B0] tracking-widest uppercase mb-2">
+          <p className="text-[11px] font-bold text-gray-800 tracking-widest uppercase mb-2">
             با ما همراه باشید
           </p>
-          <h2 className="text-2xl md:text-3xl font-black text-gray-800">
+          <h2 className="text-2xl md:text-3xl font-black text-[#5b4638]">
             در شبکه‌های اجتماعی
           </h2>
           <p className="mt-2 inline-block text-sm text-gray-500 max-w-md mx-auto">

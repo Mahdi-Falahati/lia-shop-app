@@ -45,16 +45,16 @@ export default function FavoritesPage() {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#e8f5ee] via-white to-white py-24 px-5 md:px-8 text-right">
-      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#00c880]/10 rounded-full blur-3xl pointer-events-none" />
+    <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#f0e8e0] via-white to-white py-24 px-5 md:px-8 text-right">
+      <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#9b765d]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#00764F]/10 border border-[#00764F]/20 text-[11px] font-bold text-[#00764F] mb-4">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#5b4638]/10 border border-[#5b4638]/20 text-[11px] font-bold text-[#5b4638] mb-4">
             لیست محبوب
           </span>
 
-          <h1 className="text-3xl md:text-4xl font-black text-[#0f1e16]">
+          <h1 className="text-3xl md:text-4xl font-black text-[#2a1a0e]">
             علاقه‌مندی‌های من
           </h1>
         </div>
@@ -91,21 +91,25 @@ export default function FavoritesPage() {
               animate={{ opacity: 1, y: 0 }}
               className="flex flex-col items-center justify-center text-center py-28"
             >
-              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#00764F]/10 text-[#00764F] mb-6">
+              <div className="w-20 h-20 flex items-center justify-center rounded-full bg-[#9b765d]/10 text-[#5b4638] mb-6">
                 <Heart size={32} />
               </div>
 
-              <h2 className="text-xl font-bold mb-3 text-gray-800">
-                لیست علاقه‌مندی‌های شما خالی است آرسی
+              <h2 className="text-xl font-bold mb-3 text-[#2a1a0e]">
+                لیست علاقه‌مندی‌های شما خالی است
               </h2>
 
-              <p className="text-gray-500 mb-8 text-sm max-w-sm leading-6">
+              <p className="text-[#2a1a0e]/50 mb-8 text-sm max-w-sm leading-6">
                 هر زمان محصولی را پسندیدی، روی آیکون قلب کلیک کن تا اینجا ذخیره شود.
               </p>
 
               <Link
                 href="/shop"
-                className="inline-flex items-center gap-2 bg-[#00764F] text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-[#005e3f] transition duration-300 shadow-lg shadow-[#00764F]/25"
+                className="inline-flex items-center gap-2 text-white px-6 py-3 rounded-xl text-sm font-semibold transition duration-300"
+                style={{
+                  background: "linear-gradient(135deg,#9b765d,#5b4638)",
+                  boxShadow: "0 4px 16px rgba(155,118,93,0.30)",
+                }}
               >
                 برو به فروشگاه
                 <ShoppingBag size={16} />

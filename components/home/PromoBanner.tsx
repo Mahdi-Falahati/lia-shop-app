@@ -15,7 +15,7 @@ export default function PromoBanner() {
           transition={{ duration: 0.6 }}
           className="relative overflow-hidden rounded-3xl p-8 md:p-10"
           style={{
-            background: "linear-gradient(135deg, #00764F 0%, #1a9468 40%, #4ab890 100%)",
+            background: "linear-gradient(135deg, #9b765d 0%, #5b4638 40%, #5b4638 100%)",
             boxShadow: "0 20px 60px rgba(0,118,79,0.3), 0 4px 16px rgba(0,0,0,0.1)",
           }}
         >
