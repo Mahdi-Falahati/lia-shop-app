@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import BackButton from "@/components/ui/backBTN";
 
 type Product = {
-  id: number;
+  id: string | number;
   name: string;
   price: number;
   image: string;
