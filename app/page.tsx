@@ -8,16 +8,18 @@ import InfoSection from "@/components/home/InfoSection"
 import FloatingLuxury from "@/components/home/FloatingLuxury"
 import RingSizeGuide from "@/components/home/RingSizeGuide"
 import NastaliqScrollSection from "@/components/home/NastaliqScrollSection"
+import CategoryShowcase from "@/components/home/Categoryshowcase"
 
 export default function Home() {
   return (
     <main>
       <Hero />
+      <CategoryShowcase />
       <NastaliqScrollSection />
       <PromoBanner />
       <BeautySection />
       <RingSizeGuide />
-      <InfoSection/>
+      <InfoSection />
       <SocialJoin />
       <FloatingLuxury />
     </main>

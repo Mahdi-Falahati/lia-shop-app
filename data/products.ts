@@ -102,7 +102,7 @@ export const products = [
 ]
 
 
-export const ACCESSORY_CATEGORIES = ["همه", "گردنبند", "دستبند", "گوشواره", "انگشتر", "ست کامل"]
+export const ACCESSORY_CATEGORIES = ["همه", "گردنبند", "دستبند", "گوشواره", "انگشتر"]
 export const BEAUTY_CATEGORIES = ["همه", "مراقبت پوست", "رژ و لب", "ریمل و چشم", "کرم و سرم", "عطر"]
 
 export const ACCESSORY_PRODUCTS = [
