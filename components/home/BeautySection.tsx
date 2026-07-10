@@ -23,6 +23,7 @@ const containerVariants: Variants = {
   },
 }
 
+<<<<<<< HEAD
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -37,16 +38,26 @@ const cardVariants: Variants = {
     },
   },
 }
+=======
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+} as const
+>>>>>>> 458afcb33cbe5aebd216ee0f6d8262180045f80b
 
 export default function BeautySection() {
   const [favoriteIds, setFavoriteIds] = useState<(string | number)[]>([])
 
   const handleToggleFavorite = (id: string | number) => {
+<<<<<<< HEAD
     setFavoriteIds((prev) =>
       prev.includes(id)
         ? prev.filter((i) => i !== id)
         : [...prev, id]
     )
+=======
+    setFavoriteIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
+>>>>>>> 458afcb33cbe5aebd216ee0f6d8262180045f80b
   }
 
   return (
