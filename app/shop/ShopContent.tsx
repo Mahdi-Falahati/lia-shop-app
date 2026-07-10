@@ -1,20 +1,202 @@
-import { Suspense } from "react"
-import ShopContent from "./ShopContent"
+"use client"
 
-export default function ShopPage() {
-  return (
-    <Suspense fallback={<ShopLoadingFallback />}>
-      <ShopContent />
-    </Suspense>
-  )
+import { useState, useMemo, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
+import { SlidersHorizontal, X, ChevronDown, Search, Sparkles, Gem } from "lucide-react"
+import ProductCard from "@/components/ui/ProductCard"
+
+type ShopMode = "accessory" | "beauty"
+
+const ACCESSORY_CATEGORIES = ["همه", "گردنبند", "دستبند", "گوشواره", "انگشتر", "ست کامل"]
+const BEAUTY_CATEGORIES = ["همه", "مراقبت پوست", "رژ و لب", "ریمل و چشم", "کرم و سرم", "عطر"]
+
+const ACCESSORY_PRODUCTS = [
+  { id: 1, name: "گردنبند مینیمال طلا طرح LIA", price: 450000, image: "/p.jpg", category: "گردنبند", isFavorite: false },
+  { id: 2, name: "دستبند استیل زنانه ظریف", price: 320000, image: "/p2.jpg", category: "دستبند", isFavorite: false },
+  { id: 3, name: "گوشواره لوله‌ای مدل کلاسیک", price: 290000, image: "/p3.jpg", category: "گوشواره", isFavorite: true },
+  { id: 4, name: "انگشتر نقره زنانه باریک", price: 180000, image: "/p.jpg", category: "انگشتر", isFavorite: false },
+  { id: 5, name: "ست گردنبند و دستبند LIA", price: 720000, image: "/p2.jpg", category: "ست کامل", isFavorite: false },
+  { id: 6, name: "گردنبند زنجیر طلایی ظریف", price: 390000, image: "/p3.jpg", category: "گردنبند", isFavorite: true },
+  { id: 7, name: "دستبند چرم و استیل مشکی", price: 260000, image: "/p.jpg", category: "دستبند", isFavorite: false },
+  { id: 8, name: "گوشواره حلقه‌ای بزرگ طلایی", price: 340000, image: "/p2.jpg", category: "گوشواره", isFavorite: false },
+]
+
+const BEAUTY_PRODUCTS = [
+  { id: 101, name: "کرم مرطوب‌کننده رز گلد LIA", price: 380000, image: "/p.jpg", category: "مراقبت پوست", isFavorite: false },
+  { id: 102, name: "رژ لب مخملی شماره ۰۷", price: 145000, image: "/p2.jpg", category: "رژ و لب", isFavorite: true },
+  { id: 103, name: "ریمل حجم‌دهنده ضدآب", price: 210000, image: "/p3.jpg", category: "ریمل و چشم", isFavorite: false },
+  { id: 104, name: "سرم ویتامین C روشن‌کننده", price: 560000, image: "/p.jpg", category: "کرم و سرم", isFavorite: false },
+  { id: 105, name: "عطر زنانه LIA Rose 50ml", price: 890000, image: "/p2.jpg", category: "عطر", isFavorite: true },
+  { id: 106, name: "ماسک صورت طلایی شبانه", price: 320000, image: "/p3.jpg", category: "مراقبت پوست", isFavorite: false },
+  { id: 107, name: "خط چشم ماژیکی مشکی مات", price: 98000, image: "/p.jpg", category: "ریمل و چشم", isFavorite: false },
+  { id: 108, name: "کرم ضدآفتاب SPF50 سبک", price: 275000, image: "/p2.jpg", category: "کرم و سرم", isFavorite: false },
+]
+
+const SORT_OPTIONS = [
+  { value: "newest", label: "جدیدترین" },
+  { value: "cheapest", label: "ارزان‌ترین" },
+  { value: "expensive", label: "گران‌ترین" },
+]
+
+const MAX_PRICE = 1000000
+
+function formatPrice(n: number) {
+  return n.toLocaleString("fa-IR") + " تومان"
 }
 
-<<<<<<< HEAD
-function ShopLoadingFallback() {
+const THEME = {
+  accessory: {
+    pillActive: "linear-gradient(135deg,#9b765d,#5b4638)",
+    accent: "#9b765d",
+    accentDark: "#5b4638",
+    border: "#d8c6b7",
+    subtle: "#f0e8e0",
+    text: "#2a1a0e",
+    labelClass: "text-[#9b765d]",
+    badgeClass: "bg-[#5b4638]/10 border-[#5b4638]/15 text-[#5b4638]",
+    dotClass: "bg-[#9b765d]",
+    shadow: "rgba(91,70,56,0.12)",
+    icon: Gem,
+    name: "اکسسوری",
+  },
+  beauty: {
+    pillActive: "linear-gradient(135deg,#c9728d,#8b3a5a)",
+    accent: "#c9728d",
+    accentDark: "#8b3a5a",
+    border: "#f0c8d5",
+    subtle: "#fdf0f3",
+    text: "#2d0f1a",
+    labelClass: "text-[#c9728d]",
+    badgeClass: "bg-[#8b3a5a]/10 border-[#8b3a5a]/15 text-[#8b3a5a]",
+    dotClass: "bg-[#c9728d]",
+    shadow: "rgba(139,58,90,0.12)",
+    icon: Sparkles,
+    name: "آرایشی بهداشتی",
+  },
+}
+
+export default function ShopContent() {
+  const searchParams = useSearchParams()
+  const urlCategory = searchParams.get("category")
+
+  const [mode, setMode] = useState<ShopMode>("accessory")
+  const [activeCategory, setActiveCategory] = useState("همه")
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, MAX_PRICE])
+  const [sort, setSort] = useState("newest")
+  const [search, setSearch] = useState("")
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [favorites, setFavorites] = useState<number[]>(
+    [...ACCESSORY_PRODUCTS, ...BEAUTY_PRODUCTS].filter((p) => p.isFavorite).map((p) => p.id)
+  )
+
+  useEffect(() => {
+    if (!urlCategory) return
+    const inAccessory = ACCESSORY_CATEGORIES.includes(urlCategory)
+    const inBeauty = BEAUTY_CATEGORIES.includes(urlCategory)
+    if (inAccessory) {
+      setMode("accessory")
+      setActiveCategory(urlCategory)
+    } else if (inBeauty) {
+      setMode("beauty")
+      setActiveCategory(urlCategory)
+    }
+  }, [urlCategory])
+
+  const t = THEME[mode]
+  const categories = mode === "accessory" ? ACCESSORY_CATEGORIES : BEAUTY_CATEGORIES
+  const allProducts = mode === "accessory" ? ACCESSORY_PRODUCTS : BEAUTY_PRODUCTS
+
+  const switchMode = (m: ShopMode) => {
+    setMode(m)
+    setActiveCategory("همه")
+    setPriceRange([0, MAX_PRICE])
+    setSearch("")
+    setSort("newest")
+  }
+
+  const filtered = useMemo(() => {
+    let list = [...allProducts]
+    if (activeCategory !== "همه") list = list.filter((p) => p.category === activeCategory)
+    list = list.filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1])
+    if (search.trim()) list = list.filter((p) => p.name.includes(search.trim()))
+    if (sort === "cheapest") list.sort((a, b) => a.price - b.price)
+    if (sort === "expensive") list.sort((a, b) => b.price - a.price)
+    return list
+  }, [mode, activeCategory, priceRange, sort, search, allProducts])
+
+  const handleToggleFavorite = (id: number | string) => {
+    const numId = Number(id)
+    setFavorites((prev) =>
+      prev.includes(numId) ? prev.filter((f) => f !== numId) : [...prev, numId]
+    )
+  }
+
+  const handleAddToCart = (id: number | string) => {
+    console.log("add to cart", id)
+  }
+
+  const resetFilters = () => {
+    setActiveCategory("همه")
+    setPriceRange([0, MAX_PRICE])
+    setSearch("")
+  }
+
+  const hasActiveFilters = activeCategory !== "همه" || priceRange[0] > 0 || priceRange[1] < MAX_PRICE
+
+  const FilterContent = () => (
+    <div className="space-y-7" dir="rtl">
+      <div>
+        <p className={`text-[11px] font-bold uppercase tracking-widest mb-3 ${t.labelClass}`}>دسته‌بندی</p>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className="px-3.5 py-1.5 rounded-full text-[12.5px] font-semibold transition-all duration-200"
+              style={
+                activeCategory === cat
+                  ? { background: t.pillActive, color: "white" }
+                  : { background: t.subtle, color: t.accentDark }
+              }
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <p className={`text-[11px] font-bold uppercase tracking-widest mb-3 ${t.labelClass}`}>رنج قیمت</p>
+        <div className="space-y-3">
+          <input
+            type="range" min={0} max={MAX_PRICE} step={10000} value={priceRange[1]}
+            onChange={(e) => setPriceRange([0, Number(e.target.value)])}
+            className="w-full" style={{ accentColor: t.accent }}
+          />
+          <div className="flex justify-between text-[11.5px] font-medium" style={{ color: t.accentDark + "b0" }}>
+            <span>{formatPrice(priceRange[0])}</span>
+            <span>{formatPrice(priceRange[1])}</span>
+          </div>
+        </div>
+      </div>
+
+      {hasActiveFilters && (
+        <button
+          onClick={resetFilters}
+          className="w-full py-2.5 rounded-xl text-[12.5px] font-semibold transition-colors bg-white"
+          style={{ color: t.accentDark, border: `1px solid ${t.border}` }}
+        >
+          پاک کردن فیلترها
+        </button>
+      )}
+    </div>
+  )
+
   return (
-    <main dir="rtl" className="min-h-screen bg-white pt-24 pb-16 px-4 md:px-8 flex items-center justify-center">
-      <div className="text-sm text-gray-400">در حال بارگذاری فروشگاه...</div>
-=======
+    <main dir="rtl" className="min-h-screen bg-white pt-24 pb-16 px-4 md:px-8 font-vazir">
+      <div className="max-w-7xl mx-auto">
+
         <div className="mb-8">
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28 }}>
             <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-[11px] font-bold mb-4 ${t.badgeClass}`}>
@@ -163,7 +345,9 @@ function ShopLoadingFallback() {
                       transition={{ duration: 0.22, delay: i * 0.03 }}
                     >
                       <ProductCard
-                        id={product.id} name={product.name} price={product.price}
+                        id={product.id}
+                        name={product.name}
+                        price={product.price}
                         image={product.image}
                         isFavorite={favorites.includes(product.id)}
                         onToggleFavorite={handleToggleFavorite}
@@ -214,7 +398,6 @@ function ShopLoadingFallback() {
           </>
         )}
       </AnimatePresence>
->>>>>>> 458afcb33cbe5aebd216ee0f6d8262180045f80b
     </main>
   )
 }
