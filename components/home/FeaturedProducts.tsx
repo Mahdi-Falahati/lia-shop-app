@@ -17,7 +17,6 @@ interface ProductCardProps {
   onAddToCart?: (id: string | number) => void
 }
 
-<<<<<<< HEAD
 const ProductCard = ({
   id,
   name,
@@ -27,29 +26,6 @@ const ProductCard = ({
   isFavorite,
   onToggleFavorite,
 }: ProductCardProps) => {
-=======
-const cardVariants = {
-  hidden: { opacity: 0, y: 28, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.55, ease: "easeOut" as const },
-  },
-}
-
-export default function FeaturedProducts() {
-  const [favoriteIds, setFavoriteIds] = useState<Array<string | number>>([])
-
-  const handleToggleFavorite = (id: string | number) => {
-    setFavoriteIds((prev) =>
-      prev.includes(id)
-        ? prev.filter((itemId) => itemId !== id)
-        : [...prev, id]
-    )
-  }
-
->>>>>>> 458afcb33cbe5aebd216ee0f6d8262180045f80b
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -77,7 +53,6 @@ export default function FeaturedProducts() {
           }}
           className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/70 backdrop-blur-md transition-all hover:bg-white hover:scale-110 active:scale-90"
         >
-<<<<<<< HEAD
           <Heart
             size={16}
             className={`transition-all duration-300 ${
@@ -87,34 +62,6 @@ export default function FeaturedProducts() {
             }`}
           />
         </button>
-=======
-          {products.map((p) => (
-            <motion.div key={p.id} variants={cardVariants}>
-              <ProductCard
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                image={p.image}
-                isFavorite={favoriteIds.includes(p.id)}
-                onToggleFavorite={handleToggleFavorite}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-8 flex justify-center md:hidden"
-        >
-          <Link href="/shop" className="btn-outline-brand flex items-center gap-2">
-            مشاهده همه محصولات
-            <ArrowLeft size={13} className="-rotate-180" />
-          </Link>
-        </motion.div>
->>>>>>> 458afcb33cbe5aebd216ee0f6d8262180045f80b
       </div>
 
       <div className="mt-4 px-1 pb-2 text-center">
