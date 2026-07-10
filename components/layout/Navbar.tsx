@@ -53,12 +53,25 @@ export default function Navbar() {
           : "bg-[gradient-to-b from-black/52 to-black/8 backdrop-blur-[6px] border-b border-white/10 shadow-[0_2px_24px_rgba(0,0,0,0.22)]]"
           }`}
       >
+
         <div className="max-w-7xl mx-auto px-5 md:px-10 h-[72px] flex items-center justify-between">
-
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <LiaLogo />
-          </Link>
-
+          <div className="flex items-center gap-3">
+              <motion.button
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                onClick={() => setMenuOpen(true)}
+                aria-label="باز کردن منو"
+                className={`md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-[5px] transition-all duration-200 ${scrolled ? "hover:bg-[#9b765d]/8" : "hover:bg-white/15"
+                  }`}
+              >
+                <span className={`block w-5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"}`} />
+                <span className={`block w-3.5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"} mr-auto`} />
+                <span className={`block w-5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"}`} />
+              </motion.button>
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+              <LiaLogo />
+            </Link>
+          </div>
           <nav className={`hidden md:flex items-center gap-0.5 ${scrolled ? "text-gray" : isHome ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]" : "text-gray drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]"
             }`}>
             {navLinks.map((link) => (
@@ -107,19 +120,6 @@ export default function Navbar() {
                 ۰
               </span>
             </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.94 }}
-              onClick={() => setMenuOpen(true)}
-              aria-label="باز کردن منو"
-              className={`md:hidden w-10 h-10 rounded-xl flex flex-col items-center justify-center gap-[5px] transition-all duration-200 ${scrolled ? "hover:bg-[#9b765d]/8" : "hover:bg-white/15"
-                }`}
-            >
-              <span className={`block w-5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"}`} />
-              <span className={`block w-3.5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"} mr-auto`} />
-              <span className={`block w-5 h-[2px] rounded-full transition-colors duration-300 ${scrolled ? "bg-gray-700" : "bg-white"}`} />
-            </motion.button>
           </div>
 
         </div>
@@ -151,13 +151,7 @@ export default function Navbar() {
                 boxShadow: "-16px 0 60px rgba(155,118,93,0.14)",
               }}
             >
-              <div className="flex items-center justify-between px-5 py-4 border-b border-[#d8c6b7]">
-                <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5">
-                  <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-md ring-1 ring-[#9b765d]/30">
-                    <Image src="/favicon.png" alt="LIA" fill className="object-cover" />
-                  </div>
-                  <span className="text-lg font-black text-gradient">LIA</span>
-                </Link>
+              <div className="flex items-center justify-end px-5 py-4 border-b border-[#d8c6b7]">
                 <motion.button
                   whileHover={{ rotate: 90, scale: 1.1 }}
                   transition={{ duration: 0.22 }}

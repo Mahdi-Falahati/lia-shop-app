@@ -5,82 +5,58 @@ import { useRef } from "react"
 import Image from "next/image"
 
 const FloatingLuxury = () => {
-    const containerRef = useRef(null)
-
+    const containerRef = useRef<HTMLDivElement>(null)
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        offset: ["start end", "center center"]
+        offset: ["start end", "center center"],
     })
 
-
-    const xL = useTransform(scrollYProgress, [0, 1], [-600, 0])
-    const xI = useTransform(scrollYProgress, [0, 1], [-900, 0])
-    const xA = useTransform(scrollYProgress, [0, 1], [-1200, 0])
-    const xBallon = useTransform(scrollYProgress, [0, 1], [-1500, 0])
-
+    const textX = useTransform(scrollYProgress, [0, 1], [-250, 0])
+    const imageX = useTransform(scrollYProgress, [0, 1], [250, 0])
     const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1])
 
-    const rotate = useTransform(scrollYProgress, [0, 1], [-20, 0])
-
-    const items = [
-        { id: "A", src: "/A.png", alt: "A", x: xA },
-        { id: "I", src: "/I.png", alt: "I", x: xI },
-        { id: "L", src: "/L.png", alt: "L", x: xL },
-    ]
-
     return (
-        <div
+        <section
+            dir="ltr"
             ref={containerRef}
-            className="relative w-full overflow-hidden bg-[#fdfaf7] py-20 md:py-32 min-h-[50vh] flex items-center"
+            className="relative overflow-hidden bg-[#fdfaf7] py-6"
         >
-            <div className="container mx-auto flex flex-nowrap justify-center items-center gap-2 md:gap-10 px-4">
-                {items.map((item) => (
+            <div className="container mx-auto px-6">
+                <div className="flex flex-col-reverse items-center gap-14 md:flex-row md:justify-between">
                     <motion.div
-                        key={item.id}
-                        style={{
-                            x: item.x,
-                            opacity: opacity,
-                            rotate: rotate
-                        }}
-                        className="relative w-[22vw] h-[22vw] max-w-[240px] max-h-[240px] flex-shrink-0"
+                        style={{ x: textX, opacity }}
+                        className="max-w-2xl text-center md:text-left"
                     >
-                        {item.type === "float" ? (
-                            <motion.div
-                                animate={{
-                                    y: [0, -15, 0],
-                                    rotate: [0, 5, -5, 0],
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                className="w-full h-full"
-                            >
-                                <Image
-                                    src={item.src}
-                                    alt={item.alt}
-                                    fill
-                                    unoptimized
-                                    className="object-contain"
-                                />
-                            </motion.div>
-                        ) : (
-                            <div className="w-full h-full">
-                                <Image
-                                    src={item.src}
-                                    alt={item.alt}
-                                    fill
-                                    unoptimized
-                                    className="object-contain"
-                                />
-                            </div>
-                        )}
+                        <h2 className="font-serif text-4xl leading-tight text-stone-900 md:text-6xl">
+                            Lia Design
+                            <br />
+                            <span className="italic font-light">
+                                a fusion of beauty,
+                                <br />
+                                authenticity,
+                            </span>
+                            <br />
+                            <span className="font-medium">and your brilliance.</span>
+                        </h2>
                     </motion.div>
-                ))}
+
+                    <motion.div
+                        style={{ x: imageX, opacity }}
+                        className="relative h-[320px] w-[260px] md:h-[520px] md:w-[420px]"
+                    >
+                        <Image
+                            src="/doll.png"
+                            alt="Lia Design"
+                            fill
+                            priority
+                            unoptimized
+                            className="object-contain drop-shadow-2xl"
+                        />
+                    </motion.div>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 
