@@ -40,10 +40,6 @@ export default function FavoritesPage() {
     setFavorites((prev) => prev.filter((item) => item.id !== id))
   }
 
-  const handleAddToCart = (id: string | number) => {
-    console.log(`محصول ${id} به سبد اضافه شد`)
-  }
-
   return (
     <main className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#f0e8e0] via-white to-white py-24 px-5 md:px-8 text-right">
       <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#9b765d]/10 rounded-full blur-3xl pointer-events-none" />
@@ -76,11 +72,8 @@ export default function FavoritesPage() {
                     name={item.name}
                     price={item.price}
                     image={item.image}
-                    category={item.category}
                     isFavorite={true}
-                    mode="favorites"
                     onToggleFavorite={handleRemoveFavorite}
-                    onAddToCart={handleAddToCart}
                   />
                 </motion.div>
               ))}

@@ -37,10 +37,6 @@ export default function FeaturedProducts() {
     )
   }
 
-  const handleAddToCart = (id: string | number) => {
-    console.log(`محصول ${id} به سبد خرید اضافه شد`)
-  }
-
   return (
     <section className="py-20 bg-gradient-to-b from-white to-[#E6F1ED]/40">
       <div className="max-w-7xl mx-auto px-5 md:px-8">
@@ -87,11 +83,8 @@ export default function FeaturedProducts() {
                 name={p.name}
                 price={p.price}
                 image={p.image}
-                category={p.category}
-                mode="shop"
                 isFavorite={favoriteIds.includes(p.id)}
                 onToggleFavorite={handleToggleFavorite}
-                onAddToCart={handleAddToCart}
               />
             </motion.div>
           ))}
