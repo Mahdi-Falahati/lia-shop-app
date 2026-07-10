@@ -76,11 +76,8 @@ export default function FavoritesPage() {
                     name={item.name}
                     price={item.price}
                     image={item.image}
-                    category={item.category}
                     isFavorite={true}
-                    mode="favorites"
                     onToggleFavorite={handleRemoveFavorite}
-                    onAddToCart={handleAddToCart}
                   />
                 </motion.div>
               ))}

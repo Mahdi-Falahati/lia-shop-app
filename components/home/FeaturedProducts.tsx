@@ -1,115 +1,94 @@
 "use client"
 
-import { useState } from "react"
-import { motion } from "framer-motion"
 import Link from "next/link"
-import ProductCard from "@/components/ui/ProductCard"
-import { products } from "@/data/products"
-import { ArrowLeft } from "lucide-react"
+import Image from "next/image"
+import { Heart } from "lucide-react"
+import { motion } from "framer-motion"
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.09,
-    },
-  },
+interface ProductCardProps {
+  id: string | number
+  name: string
+  price: string | number
+  image: string
+  category?: string
+  mode?: string
+  isFavorite?: boolean
+  onToggleFavorite?: (id: string | number) => void
+  onAddToCart?: (id: string | number) => void
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 28, scale: 0.97 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.55, ease: "easeOut" as const },
-  },
-}
-
-export default function FeaturedProducts() {
-  const [favoriteIds, setFavoriteIds] = useState<Array<string | number>>([])
-
-  const handleToggleFavorite = (id: string | number) => {
-    setFavoriteIds((prev) =>
-      prev.includes(id)
-        ? prev.filter((itemId) => itemId !== id)
-        : [...prev, id]
-    )
-  }
-
-  const handleAddToCart = (id: string | number) => {
-    console.log(`محصول ${id} به سبد خرید اضافه شد`)
-  }
-
+const ProductCard = ({
+  id,
+  name,
+  price,
+  image,
+  category,
+  isFavorite,
+  onToggleFavorite,
+}: ProductCardProps) => {
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-[#E6F1ED]/40">
-      <div className="max-w-7xl mx-auto px-5 md:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-end justify-between mb-10"
-        >
-          <div className="text-right">
-            <p className="text-xs font-semibold text-[#8CC1B0] uppercase tracking-widest mb-2">
-              کالکشن ویژه
-            </p>
-            <h2 className="text-2xl md:text-3xl font-black text-gray-800">
-              محصولات منتخب
-            </h2>
-            <div className="mt-2 w-12 h-1 bg-gradient-to-l from-[#00764F] to-[#8CC1B0] rounded-full mr-auto" />
-          </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      whileHover={{ y: -8 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      className="group relative flex flex-col rounded-[32px] bg-white p-3 transition-all duration-500 hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)]"
+    >
+      <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-[#fcfaf8]">
+        <Link href={`/product/${id}`} className="block h-full w-full">
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+            sizes="(max-width: 768px) 50vw, 25vw"
+          />
+        </Link>
 
-          <Link
-            href="/shop"
-            className="btn-outline-brand group hidden md:flex items-center gap-2"
-          >
-            مشاهده همه
-            <ArrowLeft
-              size={13}
-              className="-rotate-180 group-hover:-translate-x-1 transition-transform duration-200"
-            />
-          </Link>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5"
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            onToggleFavorite?.(id)
+          }}
+          className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/70 backdrop-blur-md transition-all hover:bg-white hover:scale-110 active:scale-90"
         >
-          {products.map((p) => (
-            <motion.div key={p.id} variants={cardVariants}>
-              <ProductCard
-                id={p.id}
-                name={p.name}
-                price={p.price}
-                image={p.image}
-                category={p.category}
-                mode="shop"
-                isFavorite={favoriteIds.includes(p.id)}
-                onToggleFavorite={handleToggleFavorite}
-                onAddToCart={handleAddToCart}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="mt-8 flex justify-center md:hidden"
-        >
-          <Link href="/shop" className="btn-outline-brand flex items-center gap-2">
-            مشاهده همه محصولات
-            <ArrowLeft size={13} className="-rotate-180" />
-          </Link>
-        </motion.div>
+          <Heart
+            size={16}
+            className={`transition-all duration-300 ${
+              isFavorite
+                ? "fill-[#ff8fa3] text-[#ff8fa3]"
+                : "text-[#d8c6b7]"
+            }`}
+          />
+        </button>
       </div>
-    </section>
+
+      <div className="mt-4 px-1 pb-2 text-center">
+        {category && (
+          <p className="mb-1 text-[10px] text-[#b4a79e]">
+            {category}
+          </p>
+        )}
+
+        <Link href={`/product/${id}`}>
+          <h3 className="text-[14px] font-medium text-[#4a4846] line-clamp-1 transition-colors hover:text-[#ff8fa3]">
+            {name}
+          </h3>
+        </Link>
+
+        <div className="mt-1.5 flex items-center justify-center gap-1">
+          <span className="text-[16px] font-black text-[#3a3836]">
+            {Number(price).toLocaleString("fa-IR")}
+          </span>
+
+          <span className="text-[9px] font-bold text-[#b4a79e] uppercase tracking-wider">
+            تومان
+          </span>
+        </div>
+      </div>
+    </motion.div>
   )
 }
+
+export default ProductCard
